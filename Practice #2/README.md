@@ -1,6 +1,6 @@
-#Métodos de ordenamiento:
+# Métodos de ordenamiento:
 
-##¿Qué es ordenamiento?
+## ¿Qué es ordenamiento?
 Es la operación de arreglar los elementos en algún orden secuencial de acuerdo a un criterio de
 ordenamiento.
 El propósito principal de un ordenamiento es el de facilitar las búsquedas de los miembros del
@@ -8,22 +8,22 @@ conjunto ordenado.
 Ordenar un grupo de datos significa mover los datos o sus referencias para que queden en una
 secuencia por categorías y en forma ascendente o descendente.
 
-##Tipos de ordenamientos:
+## Tipos de ordenamientos:
 Los 2 tipos de ordenamientos que se pueden realizar son: los internos y los externos.
 
-###Ordenamientos internos:
+### Ordenamientos internos:
 Son aquellos en los que los valores a ordenar están en memoria principal, por lo que se asume
 que el tiempo que se requiere para acceder cualquier elemento sea el mismo (a [1], a [500],
 etc.)
 
-###Ordenamientos externos:
+### Ordenamientos externos:
 Son aquellos en los que los valores a ordenar están en memoria secundaria (disco, cinta,
 cilindro magnético, etc.), por lo que se asume que el tiempo que se requiere para acceder a
 cualquier elemento depende de la última posición accesada (posición 1, posición 500, etc.).
 
-##Listado de Algoritmos
+## Listado de Algoritmos
 
-###4.1 Internos:
+### 4.1 Internos:
 1. Inserción (InsertionSort).
 2. Selección (SelectionSort).
 3. Intercambio.
@@ -31,7 +31,7 @@ cualquier elemento depende de la última posición accesada (posición 1, posici
 5. QuickSort.
 6. MergeSort.
 7. RadixSort.
-###4.2 Externos:
+### 4.2 Externos:
 1. Straight merging.
 2. Natural merging.
 3. Balanced multiway merging.
