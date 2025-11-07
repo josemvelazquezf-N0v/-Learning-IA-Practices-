@@ -26,6 +26,8 @@ cualquier elemento depende de la última posición accesada (posición 1, posici
 ### 4.1 Internos:
 1. Inserción (InsertionSort).
 2. Selección (SelectionSort).
+1. Inserción (InsertionSort).
+2. Selección (SelectionSort).
 3. Intercambio.
 4. Ordenamiento de árbol.
 5. QuickSort.
