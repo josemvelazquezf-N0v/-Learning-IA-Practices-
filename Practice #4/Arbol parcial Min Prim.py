@@ -5,54 +5,61 @@ from heapq import heappush, heappop
 # Delay entre pasos para que se vea en "tiempo real" en la terminal
 STEP_DELAY = 0.4  # Delay solo para darle mas cine
 
-def export_to_mermaid(graph, mst_edges, filename="grafo_prim.md"):
-    """
-    Crea un archivo Markdown con dos diagramas Mermaid:
-      1) Grafo completo
-      2) Solo el MST
-    """
-    # 1) Construir lista de aristas únicas del grafo completo (evitar duplicados u-v y v-u)
+def export_to_mermaid_in_readme(graph, mst_edges, readme_file):
+    BEGIN = "<!-- BEGIN_AUTO_GRAPH -->"
+    END = "<!-- END_AUTO_GRAPH -->"
+
+    # 1) Leer contenido actual del README
+    with open(readme_file, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    # 2) Verificar que existan los marcadores
+    start_idx = content.find(BEGIN)
+    end_idx = content.find(END)
+
+    if start_idx == -1 or end_idx == -1:
+        print("ERROR: No se encontraron los marcadores BEGIN_AUTO_GRAPH / END_AUTO_GRAPH en el README.")
+        return
+
+    # 3) Construir listado de aristas únicas del grafo completo
     all_edges = []
     seen = set()
     for u, neighbors in graph.items():
         for v, w in neighbors:
-            key = tuple(sorted((u, v)))  # ('Entrada', 'Pasillo_1') por ejemplo
+            key = tuple(sorted((u, v)))
             if key in seen:
                 continue
             seen.add(key)
             all_edges.append((u, v, w))
 
-    # 2) Abrimos el archivo .md
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write("# Grafo generado aleatoriamente (Prim)\n\n")
-        f.write("## Grafo completo\n\n")
-        f.write("```mermaid\n")
-        f.write("graph LR\n")
+    # 4) Construir el bloque nuevo de Mermaid
+    mermaid_block = []
 
-        # Aristas completas
-        for u, v, w in all_edges:
-            # Ejemplo:  Entrada -- 5 --> Pasillo_1
-            f.write(f'  {u} -- {w} --> {v}\n')
+    mermaid_block.append(BEGIN)
+    mermaid_block.append("```mermaid")
+    mermaid_block.append("graph LR")
 
-        f.write("```\n\n")
+    # Grafo completo
+    for u, v, w in all_edges:
+        mermaid_block.append(f"  {u} -- {w} --> {v}")
 
-        # Ahora el MST
-        f.write("## Árbol Parcial Mínimo (MST)\n\n")
-        f.write("```mermaid\n")
-        f.write("graph LR\n")
+    mermaid_block.append("```")
+    mermaid_block.append(END)
 
-        for u, v, w in mst_edges:
-            f.write(f'  {u} -- {w} --> {v}\n')
+    new_mermaid_section = "\n".join(mermaid_block)
 
-        f.write("```\n")
+    # 5) Reemplazar lo que había entre los marcadores por nuestra nueva sección
+    #    OJO: end_idx apunta al inicio de END, así que recortamos hasta ahí.
+    before = content[:start_idx].rstrip() + "\n\n"
+    after = content[end_idx + len(END):].lstrip()
 
-    print(f"\nArchivo Mermaid generado: {filename}")
-    print("Ábrelo en Codespaces y usa la vista previa Markdown para ver el grafo.")
+    new_content = before + new_mermaid_section + "\n\n" + after
 
+    # 6) Escribir de vuelta el README completo
+    with open(readme_file, "w", encoding="utf-8") as f:
+        f.write(new_content)
 
-
-
-
+    print("README.md actualizado con el nuevo grafo Mermaid.")
 
 def generate_random_graph(num_nodes=8, min_weight=1, max_weight=20):
     """
@@ -198,5 +205,5 @@ if __name__ == "__main__":
     random_graph, start_node = generate_random_graph()
     
     mst_edges, total_cost = prim_mst(random_graph, start_node)
-    export_to_mermaid(random_graph, mst_edges, filename="grafo_prim.md")
+    export_to_mermaid_in_readme(random_graph, mst_edges, "README.md")
     print("Camino que pasa por todos los nodos con costo mínimo encontrado.") 

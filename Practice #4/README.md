@@ -1,3 +1,25 @@
+
+
+<!-- BEGIN_AUTO_GRAPH -->
+```mermaid
+graph LR
+  Inicio -- 7 --> Pasillo_2
+  Pasillo_1 -- 14 --> Zona_Embarque
+  Pasillo_1 -- 11 --> Estante_A
+  Pasillo_1 -- 19 --> Estante_B
+  Pasillo_1 -- 12 --> Estante_C
+  Pasillo_2 -- 19 --> Estante_B
+  Pasillo_2 -- 17 --> Zona_Embarque
+  Pasillo_2 -- 9 --> Estante_A
+  Pasillo_2 -- 14 --> Zona_Carga
+  Estante_A -- 20 --> Zona_Carga
+  Estante_A -- 9 --> Zona_Embarque
+  Estante_B -- 13 --> Estante_C
+  Estante_B -- 8 --> Zona_Carga
+  Estante_C -- 5 --> Zona_Embarque
+```
+<!-- END_AUTO_GRAPH -->
+
 # Indicaciones
 ## Realizar un simulador Árbol Parcial mínimo de Prim.
 En consola que muestre paso a paso es lo mínimo, si logran parte gráfica puntitos extras.
