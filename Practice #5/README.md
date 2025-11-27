@@ -1,3 +1,37 @@
+
+
+<!-- BEGIN_GRAPH_FULL_KRUSKAL -->
+```mermaid
+graph LR
+  Estante_C -- 7 --> Pasillo_1
+  Zona_Embarque -- 5 --> Estante_C
+  Entrada -- 8 --> Estante_C
+  Estante_B -- 3 --> Pasillo_1
+  Zona_Carga -- 18 --> Estante_B
+  Estante_A -- 12 --> Estante_B
+  Pasillo_2 -- 15 --> Pasillo_1
+  Entrada -- 19 --> Estante_B
+  Pasillo_1 -- 9 --> Zona_Embarque
+  Pasillo_2 -- 20 --> Zona_Embarque
+  Estante_A -- 5 --> Zona_Carga
+  Estante_B -- 15 --> Zona_Embarque
+  Estante_C -- 7 --> Zona_Carga
+```
+<!-- END_GRAPH_FULL_KRUSKAL -->
+
+<!-- BEGIN_GRAPH_MST_KRUSKAL -->
+```mermaid
+graph LR
+  Estante_B -- 3 --> Pasillo_1
+  Estante_A -- 5 --> Zona_Carga
+  Zona_Embarque -- 5 --> Estante_C
+  Estante_C -- 7 --> Pasillo_1
+  Estante_C -- 7 --> Zona_Carga
+  Entrada -- 8 --> Estante_C
+  Pasillo_2 -- 15 --> Pasillo_1
+```
+<!-- END_GRAPH_MST_KRUSKAL -->
+
 # Indicaciones
 ## Realizar un simulador Árbol de Máximo y Mínimo coste Kruskal.
 En consola que muestre paso a paso es lo mínimo, si logran parte gráfica puntitos extras.
