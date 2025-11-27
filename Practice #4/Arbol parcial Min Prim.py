@@ -3,7 +3,55 @@ import time
 from heapq import heappush, heappop
 
 # Delay entre pasos para que se vea en "tiempo real" en la terminal
-STEP_DELAY = 2  # puedes subir/bajar este valor
+STEP_DELAY = 0.4  # Delay solo para darle mas cine
+
+def export_to_mermaid(graph, mst_edges, filename="grafo_prim.md"):
+    """
+    Crea un archivo Markdown con dos diagramas Mermaid:
+      1) Grafo completo
+      2) Solo el MST
+    """
+    # 1) Construir lista de aristas únicas del grafo completo (evitar duplicados u-v y v-u)
+    all_edges = []
+    seen = set()
+    for u, neighbors in graph.items():
+        for v, w in neighbors:
+            key = tuple(sorted((u, v)))  # ('Entrada', 'Pasillo_1') por ejemplo
+            if key in seen:
+                continue
+            seen.add(key)
+            all_edges.append((u, v, w))
+
+    # 2) Abrimos el archivo .md
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write("# Grafo generado aleatoriamente (Prim)\n\n")
+        f.write("## Grafo completo\n\n")
+        f.write("```mermaid\n")
+        f.write("graph LR\n")
+
+        # Aristas completas
+        for u, v, w in all_edges:
+            # Ejemplo:  Entrada -- 5 --> Pasillo_1
+            f.write(f'  {u} -- {w} --> {v}\n')
+
+        f.write("```\n\n")
+
+        # Ahora el MST
+        f.write("## Árbol Parcial Mínimo (MST)\n\n")
+        f.write("```mermaid\n")
+        f.write("graph LR\n")
+
+        for u, v, w in mst_edges:
+            f.write(f'  {u} -- {w} --> {v}\n')
+
+        f.write("```\n")
+
+    print(f"\nArchivo Mermaid generado: {filename}")
+    print("Ábrelo en Codespaces y usa la vista previa Markdown para ver el grafo.")
+
+
+
+
 
 
 def generate_random_graph(num_nodes=8, min_weight=1, max_weight=20):
@@ -142,9 +190,13 @@ def prim_mst(graph, start):
         print(f"  {u} - {v}  (costo {w})")
     print("Costo total:", total_cost)
 
+    return mst_edges, total_cost
+
 
 if __name__ == "__main__":
     # Generar grafo aleatorio y correr Prim
     random_graph, start_node = generate_random_graph()
-    prim_mst(random_graph, start_node)
+    
+    mst_edges, total_cost = prim_mst(random_graph, start_node)
+    export_to_mermaid(random_graph, mst_edges, filename="grafo_prim.md")
     print("Camino que pasa por todos los nodos con costo mínimo encontrado.") 
