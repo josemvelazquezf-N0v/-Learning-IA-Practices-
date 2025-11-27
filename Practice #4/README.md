@@ -1,14 +1,14 @@
 # Indicaciones
 ## Realizar un simulador Árbol Parcial mínimo de Prim.
 En consola que muestre paso a paso es lo mínimo, si logran parte gráfica puntitos extras.
-
 ## Parte Teórica
 ### ¿Qué es?
-
+El algoritmo de Prim es una forma de construir un Árbol Parcial Mínimo, que básicamente es una estructura que conecta todos los puntos de un sistema utilizando la menor cantidad posible de costo, distancia o energía. Se siente como si empezaras en un punto y desde ahí fueras extendiendo una red que crece, siempre tomando la conexión más barata que te permita llegar a un nuevo lugar sin formar ciclos innecesarios. Es un algoritmo que expande poco a poco una “telaraña eficiente”, haciendo que todo el grafo quede conectado de manera óptima.
 ### ¿Para qué sirve?
-
+Prim sirve para encontrar la forma más económica y ordenada de conectar todos los elementos de una red sin generar redundancias. En lugares donde el costo, la distancia o la eficiencia importan muchísimo—como el diseño de redes eléctricas, caminos, rutas de robots o distribución de tuberías—Prim garantiza que se construya una estructura perfectamente conectada pero sin desperdicio: ni una conexión de más, ni ciclos que no sirven, ni rutas que aumenten los gastos. En esencia, es útil en cualquier situación en la que necesites unir muchos puntos, pero quieras hacerlo de la manera más eficiente y lógica posible.
 ### ¿Cómo se implementa en el mundo?
-
+En la vida real, el algoritmo de Prim aparece en prácticamente todos los sistemas donde se busca conectar infraestructura desde un punto inicial: compañías eléctricas lo usan para expandir redes desde una subestación, las telecomunicaciones lo utilizan para extender señal desde un servidor central, y la robótica lo emplea para generar mapas eficientes cuando un robot comienza a explorar un espacio por primera vez. Incluso empresas de logística y almacenes lo aplican para optimizar recorridos dentro de sus instalaciones. En todos estos casos, Prim funciona como una herramienta que ayuda a construir un “esqueleto” del sistema, conectando cada zona importante de la forma más barata y directa posible.
 ### ¿Cómo lo implementarías en tu vida?
-
+De hecho tengo una idea de proyecto para la resolucion de laberintos, pienso recopilar varios algoritmos y ver su funcionamiento en la practica, la busqueda de grafos es una manera muy buena de ver un laberinto y resolverlo, pensaba tomar en consideracion este para ese proyecto, pero actualmente, como lo implementaria para mi vida seria para la organizacion de trabajos o actividades de manera mas eficiente, pero son muchos factores a tomar en cuenta
 ### ¿Cómo lo implementarías en tu trabajo o tu trabajo de ensueño?
+Me gustaria dedicarme al control, entonces lo tomaria como para el calculo de sistemas, despues de todo hay variables que afectan a todo un sistema, seria encontrar las variables "Ideales" para el desarrollo de un sistema, y si alguna variable no se puede modificar, dejar esa variable en el "camino" del grafo, como algo obligatorio que tiene que tomar
