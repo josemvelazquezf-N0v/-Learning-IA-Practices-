@@ -5,23 +5,25 @@ from heapq import heappush, heappop
 # Delay entre pasos para que se vea en "tiempo real" en la terminal
 STEP_DELAY = 0.4  # Delay solo para darle mas cine
 
-def export_to_mermaid_in_readme(graph, mst_edges, readme_file):
-    BEGIN = "<!-- BEGIN_AUTO_GRAPH -->"
-    END = "<!-- END_AUTO_GRAPH -->"
+def export_to_mermaid_in_readme(graph, mst_edges, readme):
+# Marcadores
+    FULL_BEGIN = "<!-- BEGIN_AUTO_GRAPH -->"
+    FULL_END   = "<!-- END_AUTO_GRAPH -->"
 
-    # 1) Leer contenido actual del README
-    with open(readme_file, "r", encoding="utf-8") as f:
+    MST_BEGIN  = "<!-- BEGIN_GRAPH_MST -->"
+    MST_END    = "<!-- END_GRAPH_MST -->"
+
+    # Leer el README
+    with open(readme, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 2) Verificar que existan los marcadores
-    start_idx = content.find(BEGIN)
-    end_idx = content.find(END)
+    # Validar marcadores
+    for tag in (FULL_BEGIN, FULL_END, MST_BEGIN, MST_END):
+        if tag not in content:
+            print(f"ERROR: No se encontró el marcador {tag} en el README.")
+            return
 
-    if start_idx == -1 or end_idx == -1:
-        print("ERROR: No se encontraron los marcadores BEGIN_AUTO_GRAPH / END_AUTO_GRAPH en el README.")
-        return
-
-    # 3) Construir listado de aristas únicas del grafo completo
+    # Construir lista de aristas completas evitando duplicados
     all_edges = []
     seen = set()
     for u, neighbors in graph.items():
@@ -32,34 +34,45 @@ def export_to_mermaid_in_readme(graph, mst_edges, readme_file):
             seen.add(key)
             all_edges.append((u, v, w))
 
-    # 4) Construir el bloque nuevo de Mermaid
-    mermaid_block = []
-
-    mermaid_block.append(BEGIN)
-    mermaid_block.append("```mermaid")
-    mermaid_block.append("graph LR")
-
-    # Grafo completo
+    # Construir Mermaid del grafo completo
+    full_graph_mermaid = [
+        FULL_BEGIN,
+        "```mermaid",
+        "graph LR"
+    ]
     for u, v, w in all_edges:
-        mermaid_block.append(f"  {u} -- {w} --> {v}")
+        full_graph_mermaid.append(f"  {u} -- {w} --> {v}")
+    full_graph_mermaid.append("```")
+    full_graph_mermaid.append(FULL_END)
+    full_graph_mermaid = "\n".join(full_graph_mermaid)
 
-    mermaid_block.append("```")
-    mermaid_block.append(END)
+    # Construir Mermaid del MST
+    mst_mermaid = [
+        MST_BEGIN,
+        "```mermaid",
+        "graph LR"
+    ]
+    for u, v, w in mst_edges:
+        mst_mermaid.append(f"  {u} -- {w} --> {v}")
+    mst_mermaid.append("```")
+    mst_mermaid.append(MST_END)
+    mst_mermaid = "\n".join(mst_mermaid)
 
-    new_mermaid_section = "\n".join(mermaid_block)
+    # Reemplazar secciones
+    def replace_section(text, begin, end, new_block):
+        start_i = text.index(begin)
+        end_i   = text.index(end) + len(end)
+        before  = text[:start_i].rstrip() + "\n\n"
+        after   = text[end_i:].lstrip()
+        return before + new_block + "\n\n" + after
 
-    # 5) Reemplazar lo que había entre los marcadores por nuestra nueva sección
-    #    OJO: end_idx apunta al inicio de END, así que recortamos hasta ahí.
-    before = content[:start_idx].rstrip() + "\n\n"
-    after = content[end_idx + len(END):].lstrip()
+    content = replace_section(content, FULL_BEGIN, FULL_END, full_graph_mermaid)
+    content = replace_section(content, MST_BEGIN, MST_END, mst_mermaid)
 
-    new_content = before + new_mermaid_section + "\n\n" + after
+    # Guardar README
+    with open(readme, "w", encoding="utf-8") as f:
+        f.write(content)
 
-    # 6) Escribir de vuelta el README completo
-    with open(readme_file, "w", encoding="utf-8") as f:
-        f.write(new_content)
-
-    print("README.md actualizado con el nuevo grafo Mermaid.")
 
 def generate_random_graph(num_nodes=8, min_weight=1, max_weight=20):
     """
@@ -73,7 +86,7 @@ def generate_random_graph(num_nodes=8, min_weight=1, max_weight=20):
         start_node: nodo desde el que empieza Prim
     """
 
-    # Nombres "intuitivos" para 8 nodos de un almacén
+    # 8 nodos de un almacén
     node_names = [
         "Inicio",
         "Pasillo_1",
@@ -205,5 +218,7 @@ if __name__ == "__main__":
     random_graph, start_node = generate_random_graph()
     
     mst_edges, total_cost = prim_mst(random_graph, start_node)
+    print("Camino que pasa por todos los nodos con costo mínimo encontrado.")
     export_to_mermaid_in_readme(random_graph, mst_edges, "README.md")
-    print("Camino que pasa por todos los nodos con costo mínimo encontrado.") 
+    print("README.md actualizado")
+    

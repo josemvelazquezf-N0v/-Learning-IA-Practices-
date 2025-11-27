@@ -3,22 +3,38 @@
 <!-- BEGIN_AUTO_GRAPH -->
 ```mermaid
 graph LR
-  Inicio -- 7 --> Pasillo_2
-  Pasillo_1 -- 14 --> Zona_Embarque
-  Pasillo_1 -- 11 --> Estante_A
-  Pasillo_1 -- 19 --> Estante_B
-  Pasillo_1 -- 12 --> Estante_C
-  Pasillo_2 -- 19 --> Estante_B
-  Pasillo_2 -- 17 --> Zona_Embarque
-  Pasillo_2 -- 9 --> Estante_A
-  Pasillo_2 -- 14 --> Zona_Carga
-  Estante_A -- 20 --> Zona_Carga
-  Estante_A -- 9 --> Zona_Embarque
-  Estante_B -- 13 --> Estante_C
-  Estante_B -- 8 --> Zona_Carga
-  Estante_C -- 5 --> Zona_Embarque
+  Inicio -- 10 --> Estante_A
+  Inicio -- 12 --> Pasillo_1
+  Inicio -- 5 --> Pasillo_2
+  Inicio -- 20 --> Estante_B
+  Inicio -- 12 --> Estante_C
+  Inicio -- 13 --> Zona_Carga
+  Pasillo_1 -- 14 --> Pasillo_2
+  Pasillo_2 -- 20 --> Zona_Carga
+  Pasillo_2 -- 16 --> Estante_A
+  Pasillo_2 -- 9 --> Estante_C
+  Estante_A -- 3 --> Estante_C
+  Estante_A -- 3 --> Zona_Carga
+  Estante_A -- 17 --> Estante_B
+  Estante_A -- 14 --> Zona_Embarque
+  Estante_B -- 5 --> Estante_C
+  Estante_B -- 11 --> Zona_Embarque
+  Estante_C -- 16 --> Zona_Embarque
+  Zona_Carga -- 3 --> Zona_Embarque
 ```
 <!-- END_AUTO_GRAPH -->
+<!-- BEGIN_GRAPH_MST -->
+```mermaid
+graph LR
+  Inicio -- 5 --> Pasillo_2
+  Pasillo_2 -- 9 --> Estante_C
+  Estante_C -- 3 --> Estante_A
+  Estante_A -- 3 --> Zona_Carga
+  Zona_Carga -- 3 --> Zona_Embarque
+  Estante_C -- 5 --> Estante_B
+  Inicio -- 12 --> Pasillo_1
+```
+<!-- END_GRAPH_MST -->
 
 # Indicaciones
 ## Realizar un simulador Árbol Parcial mínimo de Prim.
